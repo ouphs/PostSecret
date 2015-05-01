@@ -8,6 +8,10 @@ set :database, "sqlite3:signup.sqlite3"
 set :sessions, true
 use Rack::Flash, sweep: true
 
+def current_user
+	session[:user_id] ? User.find(session[:user_id]) : nil
+end
+
 #get displays information -> places request to server to 'get' information
 #post = new -> changes something on the internet
 #delete -self explanitory
@@ -26,11 +30,12 @@ end
 post '/signup' do
 	@user = User.new(params[:user])
 	if @user.save
-		redirect '/'
+		session[:user_id] = new_user.id
 		flash[:notice] = 'Thanks for joining!'
+		redirect '/'
 	else
-		redirect '/signup'
 		flash[:alert] = 'Something went wrong :('
+		redirect '/signup'
 	end
 
 end
@@ -40,8 +45,9 @@ get '/login' do
 end
 
 post '/login' do
-	@user = User.find_by_email(params[:email])
-	if @user && @user.password == params[:password]
+	user = User.find_by_email(params[:email])
+	if user && user.password == params[:password]
+		session[:user_id] = user.id
 		flash[:notice] = "You've logged in!"
 		redirect to('/')
 	else
@@ -49,4 +55,10 @@ post '/login' do
 		redirect to('/login')
 	end
 	
+end
+
+get '/logout' do
+    session[:user_id] = nil
+    flash[:alert] = "You have logged out!"
+    redirect to('/')
 end

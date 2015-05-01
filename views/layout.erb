@@ -7,6 +7,37 @@
 	<link href='http://fonts.googleapis.com/css?family=Dancing+Script' rel='stylesheet' type='text/css'>
 </head>
 <body>
+
+	<nav>
+		<button><a href="/signup">Sign Up</a></button>  |  <button><a href="/login">Log In</a></button>
+		
+		<div class = 'sign'>
+
+           	<% if current_user %>
+                    
+            <a href="/logout"> Logout</a> 
+            <% else %>
+            <a href='/login'> Login</a>
+            <a href='/'> Sign-up</a>
+            <% end %>  
+
+        </div>
+	</nav>
+
+	<div class="container">
+
+    	<% if flash[:notice] %>
+        <div class="notice">
+        <%= flash[:notice] %>
+        </div>
+        <% end %>
+        <% if flash[:alert] %>
+        <div class="alert">
+        <%= flash[:alert] %>
+        </div>
+        <% end %>
+
+ 	</div>
 	
 
  <%= yield %>
