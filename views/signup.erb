@@ -1,0 +1,19 @@
+<div id="signup">
+
+	<form action="/signup" method="POST">
+
+		<input type="text" name="[user]fname" value="First Name" required> <br>
+
+		<input type="text" name="[user]lname" value="Last Name" required> <br>
+
+		<input type="text" name="[user]email" value="Email" required> <br>
+
+		<input type="text" onblur="this.value=!this.value?'Password':this.value;"
+		  onfocus="this.select()" onclick="if (this.value=='Password'){this.value=''; this.type='password'}" name="pwd" id="user_pass" class="input" value="Password"
+		  tabindex="20" />​
+
+		<input type="submit" value="Sign Up!">
+
+	</form>
+
+</div>
